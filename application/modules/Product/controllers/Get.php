@@ -60,14 +60,12 @@ class GetController extends ProductBasicController
 						$data = array('code'=>0,'count'=>0,'data'=>array(),'msg'=>'无数据');
 					} else {
 						//对密码与库存做特别处理
-						if(!empty($items)){
-							foreach($items AS $k=>$p){
-								if(isset($p['password']) AND strlen($p['password'])>0){
-									$items[$k]['password'] = "hidden";
-								}
-								if($p['qty_switch']>0){
-									$items[$k]['qty'] = $p['qty_virtual'];
-								}
+						foreach($items AS $k=>$p){
+							if(isset($p['password']) AND strlen($p['password'])>0){
+								$items[$k]['password'] = "hidden";
+							}
+							if($p['qty_switch']>0){
+								$items[$k]['qty'] = $p['qty_virtual'];
 							}
 						}
 						$data = array('code'=>0,'count'=>$total,'data'=>$items,'msg'=>'有数据');
@@ -91,20 +89,18 @@ class GetController extends ProductBasicController
 				if ($page > 0 && $page < (ceil($total / $limit) + 1)) {
 					$pagenum = ($page - 1) * $limit;
 					$limits = "{$pagenum},{$limit}";
-					$sql = "SELECT p1.* FROM `t_products` as p1 left join t_products_type as p2 on p1.typeid =p2.id where p1.active=1 and p1.isdelete=0 order by p2.sort_num DESC, p1.sort_num DESC LIMIT {$limits}";
+					$sql = "SELECT p1.* FROM `t_products` as p1 left join t_products_type as p2 on p1.typeid =p2.id where p1.active=1 and p1.isdelete=0 and p2.active=1 and p2.isdelete=0 order by p2.sort_num DESC, p1.sort_num DESC LIMIT {$limits}";
 					$items = $this->m_products->Query($sql);
 					if (empty($items)) {
 						$data = array('code'=>0,'count'=>0,'data'=>array(),'msg'=>'无数据');
 					} else {
 						//对密码与库存做特别处理
-						if(!empty($items)){
-							foreach($items AS $k=>$p){
-								if(isset($p['password']) AND strlen($p['password'])>0){
-									$items[$k]['password'] = "hidden";
-								}
-								if($p['qty_switch']>0){
-									$items[$k]['qty'] = $p['qty_virtual'];
-								}
+						foreach($items AS $k=>$p){
+							if(isset($p['password']) AND strlen($p['password'])>0){
+								$items[$k]['password'] = "hidden";
+							}
+							if($p['qty_switch']>0){
+								$items[$k]['qty'] = $p['qty_virtual'];
 							}
 						}
 						$data = array('code'=>0,'count'=>$total,'data'=>$items,'msg'=>'有数据');

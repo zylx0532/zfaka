@@ -96,35 +96,46 @@ class EmailController extends AdminBasicController
 	
 	public function editajaxAction()
 	{
-		$method = $this->getPost('method',false);
-		$id = $this->getPost('id',false);
-		$mailaddress = $this->getPost('mailaddress',false);
-		$mailpassword = $this->getPost('mailpassword',false);
-		$sendmail = $this->getPost('sendmail',false);
-		$sendname = $this->getPost('sendname',false);
-		$host = $this->getPost('host',false);
-		$port = $this->getPost('port',false);
-		$isssl = $this->getPost('isssl');
-		$csrf_token = $this->getPost('csrf_token', false);
-		
-		$data = array();
-		
         if ($this->AdminUser==FALSE AND empty($this->AdminUser)) {
             $data = array('code' => 1000, 'msg' => '请登录');
 			Helper::response($data);
         }
+		$method = $this->getPost('method',false);
+		$id = $this->getPost('id',false);
+		$sendmail = $this->getPost('sendmail',false);
+		$sendname = $this->getPost('sendname',false);
+		$protocol = $this->getPost('protocol');
+		$csrf_token = $this->getPost('csrf_token', false);
+		$data = array();
+
 		
-		if($method AND $mailaddress AND $mailpassword AND $sendmail AND $sendname AND $host AND $port AND is_numeric($isssl) AND $csrf_token){
+		if($method AND $sendmail AND $sendname AND $csrf_token AND $protocol){
 			if ($this->VerifyCsrfToken($csrf_token)) {
 				$m = array(
-					'mailaddress'=>$mailaddress,
-					'mailpassword'=>$mailpassword,
 					'sendmail'=>$sendmail,
 					'sendname'=>$sendname,
-					'host'=>$host,
-					'port'=>$port,
-					'isssl'=>$isssl
+					'protocol'=>$protocol
 				);
+				
+				if($protocol == "smtp"){
+					$mailaddress = $this->getPost('mailaddress',false);
+					$mailpassword = $this->getPost('mailpassword',false);
+					$host = $this->getPost('host',false);
+					$port = $this->getPost('port',false);
+					$smtp_crypto = $this->getPost('smtp_crypto');
+					if(($mailaddress AND $mailpassword AND $host AND $port AND is_numeric($smtp_crypto))==false){
+						$data = array('code' => 1000, 'msg' => '丢失参数');
+						Helper::response($data);
+					}
+					
+					$m['mailaddress'] = $mailaddress;
+					$m['mailpassword'] = $mailpassword;
+					$m['host'] = $host;
+					$m['port'] = $port;
+					$m['smtp_crypto'] = $smtp_crypto;
+				}
+				
+
 				if($method == 'edit' AND $id>0){
 					$isactive = $this->getPost('isactive');
 					$m['isactive'] = $isactive;

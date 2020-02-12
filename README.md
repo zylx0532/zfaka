@@ -30,11 +30,7 @@
 
 * 官方接口－微信H5支付
 
-* 四方接口－收款宝---[资料空白出品-必属精品](https://github.com/zlkbdotnet/zfaka/wiki/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3-%E6%94%B6%E6%AC%BE%E5%AE%9D)
-
-* 四方接口－码支付
-
-* 四方接口－有赞支付[听说凉凉了]
+* 官方接口－PayPal支付
 
 # 二、系统部署
 >**友情提示：很多人安装失败都是因为没有仔细看所有的wiki，所以请仔细看完所有的wiki再操作**
@@ -121,9 +117,7 @@
 * 相关问题QQ交流群：701035212 [收费群]
    
 # 五、推广时间
-* 全国IDC行业精英群:572511758   
-* DirectAdmin用户交流群:337686498
-* 收款宝: [https://codepay.zlkb.net/](https://codepay.zlkb.net/)
+* 全国IDC行业精英群:572511758
 
 # 六、捐赠&打赏
 >捐赠名单：[查看名单](https://github.com/zlkbdotnet/zfaka/wiki/%E6%8D%90%E8%B5%A0%E5%90%8D%E5%8D%95)
